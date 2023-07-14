@@ -38,11 +38,11 @@ export default function Home() {
     }
   }
 
-  function changeTopic(t) {
+  function changeTopic(t: string) {
     setTopic(t);
   }
 
-  function handleSearchChange(e) {
+  function handleSearchChange(e: React.ChangeEvent<HTMLInputElement>) {
     setSearchTerm(e.target.value);
   }
 
