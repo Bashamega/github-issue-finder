@@ -90,7 +90,7 @@ export default function Home() {
       </a>
       <input
         placeholder="Search.."
-        className="w-full md:w-2/3 text-lg rounded bg-slate-500 mb-4 md:mb-0"
+        className="w-full md:w-2/3 text-lg rounded bg-slate-500 mb-4 md:mb-0 p-4"
         value={searchTerm}
         onChange={handleSearchChange}
       />
