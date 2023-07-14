@@ -39,7 +39,9 @@ export default function Home() {
   }
 
   function changeTopic(t: string) {
+    setSearchTerm("")
     setTopic(t);
+    fetchData()
   }
 
   function handleSearchChange(e: React.ChangeEvent<HTMLInputElement>) {
