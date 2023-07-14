@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { FaGithub } from "react-icons/fa";
+import concall from "concall";
 
 export default function Home() {
   const [data, setData] = useState<any[]>([]);
@@ -7,13 +8,7 @@ export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchButtonClicked, setSearchButtonClicked] = useState(false);
 
-  useEffect(() => {
-    if (searchButtonClicked) {
-      fetchData();
-    }
-  }, [topic, searchTerm, searchButtonClicked]);
-
-  function fetchData() {
+  const fetchData = concall.debounce(() => {
     let apiUrl = "";
 
     if (searchTerm !== "") {
@@ -36,7 +31,13 @@ export default function Home() {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  }
+  }, 500);
+
+  useEffect(() => {
+    if (searchButtonClicked) {
+      fetchData();
+    }
+  }, [topic, searchTerm, searchButtonClicked]);
 
   function changeTopic(t: string) {
     setSearchTerm("");
@@ -65,7 +66,7 @@ export default function Home() {
     "good first issue",
     "help wanted",
     "invalid",
-    "question"
+    "question",
   ];
 
   function isDarkColor(color: string) {
@@ -85,7 +86,10 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center p-6 md:p-24 bg-gradient-to-t from-gray-800 to-gray-600">
       <h1 className="text-2xl">Github Issue Finder</h1>
-      <a href="https://github.com/bashamega/github-issue-finder" className="m-5">
+      <a
+        href="https://github.com/bashamega/github-issue-finder"
+        className="m-5"
+      >
         <FaGithub size={50} />
       </a>
       <input

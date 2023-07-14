@@ -17,4 +17,3 @@ GitHub Issue Finder is a web application that allows you to search for GitHub is
 - GitHub REST API: Used to fetch GitHub issue data.
 - Tailwind CSS: A utility-first CSS framework for styling the application.
 - React Icons: A library for including popular icons in React applications.
-
