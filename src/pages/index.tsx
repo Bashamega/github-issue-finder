@@ -123,6 +123,9 @@ export default function Home() {
               >
                 {item.title}
               </a>
+              <a href={item.repository_url}>
+                <p>{item.repository_url}</p>
+              </a>
               <div className="flex flex-wrap mt-2">
                 {item.labels && item.labels.length > 0 ? (
                   item.labels.map((label: any) => (
