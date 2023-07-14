@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { FaGithub } from "react-icons/fa";
 
 export default function Home() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<any[]>([]);
   const [topic, setTopic] = useState("html");
   const [searchTerm, setSearchTerm] = useState("");
   const [searchButtonClicked, setSearchButtonClicked] = useState(false);
@@ -52,7 +52,7 @@ export default function Home() {
 
   useEffect(() => {
     fetchData();
-  }, []); // Fetch data on initial component mount
+  }, []);
 
   const labelslang = ["HTML", "CSS", "JS", "PHP"];
   const labelsgit = [
@@ -110,7 +110,7 @@ export default function Home() {
       <h1 className="mt-5 text-lg">Issues</h1>
       <div>
         {data && data.length > 0 ? (
-          data.map((item, index) => (
+          data.map((item: any, index: number) => (
             <div
               key={item.id}
               className="bg-slate-500 flex flex-col justify-center items-center rounded mb-5  pl-5"
@@ -122,16 +122,20 @@ export default function Home() {
                 {item.title}
               </a>
               <div className="flex flex-wrap mt-2">
-                {item.labels.map((label) => (
-                  <a
-                    key={label.id}
-                    onClick={() => changeTopic(label.name)}
-                    className="bg-gray-300 text-gray-800 px-2 py-1 rounded-full mr-2 mb-2 cursor-pointer"
-                    style={{ backgroundColor: `#${label.color}` }}
-                  >
-                    {label.name}
-                  </a>
-                ))}
+                {item.labels && item.labels.length > 0 ? (
+                  item.labels.map((label: any) => (
+                    <a
+                      key={label.id}
+                      onClick={() => changeTopic(label.name)}
+                      className="bg-gray-300 text-gray-800 px-2 py-1 rounded-full mr-2 mb-2 cursor-pointer"
+                      style={{ backgroundColor: `#${label.color}` }}
+                    >
+                      {label.name}
+                    </a>
+                  ))
+                ) : (
+                  <p>No labels</p>
+                )}
               </div>
               <div className="flex items-center">
                 <p>Created by:</p>
