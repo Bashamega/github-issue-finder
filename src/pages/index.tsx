@@ -1,4 +1,3 @@
-"use client";
 import { useState, useEffect } from "react";
 import { FaGithub } from "react-icons/fa";
 
@@ -39,18 +38,22 @@ export default function Home() {
     }
   }
 
-  function changeTopic(topic) {
-    setTopic(topic);
+  function changeTopic(t) {
+    setTopic(t);
   }
 
-  function handleSearchChange(event) {
-    setSearchTerm(event.target.value);
+  function handleSearchChange(e) {
+    setSearchTerm(e.target.value);
   }
 
   function handleSearchClick() {
     setSearchButtonClicked(true);
   }
-  fetchData()
+
+  useEffect(() => {
+    fetchData();
+  }, []); // Fetch data on initial component mount
+
   const labelslang = ["HTML", "CSS", "JS", "PHP"];
   const labelsgit = [
     "bug",
