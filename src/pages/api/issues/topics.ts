@@ -26,7 +26,7 @@ export default function handler(
   )
     .then((res) => res.json())
     .then((data) => {
-      res.status(200).json({ token: token} + data);
+      res.status(200).json({ token: token});
     })
     .catch((err) => console.log(err));
 }
