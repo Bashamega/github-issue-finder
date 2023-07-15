@@ -19,7 +19,7 @@ export default function Home() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   return (
     <main className="bg-gradient-to-t from-gray-800 to-gray-600">
