@@ -22,19 +22,24 @@ To get started, make sure you have the necessary software and tools installed:
    ```bash
    cd github-issue-finder
    ```
+
 3. Install dependencies:
 
    ```bash
    npm install
-  ```
+   ```
+
+````
 4. Create a `.env` file, then add you github personal token.
 5. Start the development server:
 ```bash
 npm start
-```
+````
+
 This will launch the application in your browser at http://localhost:3000.
 
 ## Making Contributions
+
 When making contributions, please keep the following guidelines in mind:
 
 Fork the repository and create a new branch for your contribution.
@@ -59,7 +64,9 @@ Wait for the maintainers to review your contribution. Make sure to address any f
 Once approved, your changes will be merged into the main repository.
 
 ## Reporting Issues
+
 If you encounter any issues while using GitHub Issue Finder, please report them in the issue tracker. Provide a clear and detailed description of the problem, along with any relevant information to help us reproduce and investigate the issue.
 
 ## Code of Conduct
+
 Please note that GitHub Issue Finder has a code of conduct. By participating in this project, you are expected to uphold the code of conduct. Any unacceptable behavior should be reported to the project maintainers.
