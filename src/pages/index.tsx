@@ -1,6 +1,6 @@
 import { useState, useEffect, ChangeEvent } from "react";
 import { FaGithub } from "react-icons/fa";
-
+import Link from "next/link";
 export default function Home() {
   const [data, setData] = useState<any[]>([]);
   const [topic, setTopic] = useState("html");
@@ -86,22 +86,22 @@ export default function Home() {
     <main className="bg-gradient-to-t from-gray-800 to-gray-600">
       <nav className="flex justify-between items-center bg-gray-700 p-4 text-white">
         <div className="logo">
-          <a
+          <Link
             href="https://github-issue-finder.vercel.app/"
             className="font-bold  text-lg hover:underline"
           >
             Github Issues Finder
-          </a>
+          </Link>
         </div>
-        <a href="/contributors" className="ml-4 hover:underline">
+        <Link href="/contributors" className="ml-4 hover:underline">
           Contributors
-        </a>
-        <a href="https://github.com/Bashamega/github-issue-finder" className="ml-4 hover:underline">
+        </Link>
+        <Link href="https://github.com/Bashamega/github-issue-finder" className="ml-4 hover:underline">
           Contribute
-        </a>
-        <a href="/about" className="ml-4 hover:underline">
+        </Link>
+        <Link href="/about" className="ml-4 hover:underline">
           About
-        </a>
+        </Link>
       </nav>
 
       <section className="flex min-h-screen flex-col items-center p-6 md:p-24 ">
@@ -128,14 +128,14 @@ export default function Home() {
             const textColor = isDark ? "text-white" : "text-gray-800";
 
             return (
-              <a
+              <p
                 key={item}
                 onClick={() => changeTopic(item)}
                 className={`bg-gray-300 ${textColor} px-2 py-1 rounded mr-2 mb-2 cursor-pointer`}
                 style={{ backgroundColor: `#${item}` }}
               >
                 {item}
-              </a>
+              </p>
             );
           })}
         </div>
@@ -145,14 +145,14 @@ export default function Home() {
             const textColor = isDark ? "text-white" : "text-gray-800";
 
             return (
-              <a
+              <p
                 key={item}
                 onClick={() => changeTopic(item)}
                 className={`bg-gray-300 ${textColor} px-2 py-1 rounded mr-2 mb-2 cursor-pointer`}
                 style={{ backgroundColor: `#${item}` }}
               >
                 {item}
-              </a>
+              </p>
             );
           })}
         </div>
@@ -164,12 +164,12 @@ export default function Home() {
                 key={item.id}
                 className="bg-slate-500 flex flex-col justify-center items-center rounded mb-5 pl-5"
               >
-                <a
+                <Link
                   href={item.html_url}
                   className="text-white font-bold text-3xl hover:underline text-center"
                 >
                   {item.title}
-                </a>
+                </Link>
                 <div className="flex flex-wrap mt-2 items-center">
                   {item.labels && item.labels.length > 0 ? (
                     item.labels.map((label: any) => {
