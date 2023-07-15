@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { FaGithub } from "react-icons/fa";
 import Image from 'next/image';
 
 export default function Home() {
   const [contributors, setContributors] = useState<any[]>([]);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const response = await fetch(
         "https://api.github.com/repos/bashamega/github-issue-finder/contributors"
@@ -15,7 +15,7 @@ export default function Home() {
     } catch (error) {
       console.error("Error fetching contributors:", error);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchData();
