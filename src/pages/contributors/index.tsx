@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { FaGithub } from "react-icons/fa";
+import Image from 'next/image';
 
 export default function Home() {
   const [contributors, setContributors] = useState<any[]>([]);
@@ -56,10 +57,12 @@ export default function Home() {
                         rel="noopener noreferrer"
                         className="flex items-center text-white hover:underline mb-2"
                     >
-                        <img
-                        src={item.avatar_url}
-                        alt={item.login}
-                        className="w-12 h-12 mr-2 rounded-full"
+                        <Image
+                          src={item.avatar_url}
+                          alt={item.login}
+                          width={48}
+                          height={48}
+                          className="w-12 h-12 mr-2 rounded-full"
                         />
                         {item.login}
                     </a>
@@ -78,9 +81,6 @@ export default function Home() {
                 )}
             </div>
         </div>
-
-
-        
       </section>
     </main>
   );
