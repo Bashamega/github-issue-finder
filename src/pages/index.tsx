@@ -135,15 +135,26 @@ export default function Home() {
         >
           Search
         </button>
-        <p className="mt-2">
-          <>
-            {!selectedLabels.length && "Please select a label"}
-            {!!selectedLabels.length &&
-              `${
-                selectedLabels.length === 1 ? "Label:" : "Labels:"
-              } ${selectedLabels.join(", ")}`}
-          </>
-        </p>
+        <div className="w-full flex items-center justify-center mt-2">
+          <p className="relative p-2 rounded-3xl bg-slate-500 w-full md:w-1/2 text-center">
+            <>
+              {!selectedLabels.length && "Please select a label"}
+              {!!selectedLabels.length &&
+                `${
+                  selectedLabels.length === 1 ? "Label:" : "Labels:"
+                } ${selectedLabels.join(", ")}`}
+            </>
+          </p>
+          {!!selectedLabels.length && (
+            <button
+              type="button"
+              onClick={() => setSelectedLabels([])}
+              className="text-sm ml-2"
+            >
+              ❌ Clear
+            </button>
+          )}
+        </div>
         <div className="flex flex-wrap mt-3">
           {labelsgit.map((item) => {
             const isDark = isDarkColor(item);
@@ -185,15 +196,6 @@ export default function Home() {
               </p>
             );
           })}
-          {!!selectedLabels.length && (
-            <button
-              type="button"
-              onClick={() => setSelectedLabels([])}
-              className="text-sm ml-2"
-            >
-              ❌ Clear
-            </button>
-          )}
         </div>
         <h1 className="mt-5 text-lg">Issues</h1>
         <div>
