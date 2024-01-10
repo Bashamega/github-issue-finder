@@ -148,7 +148,7 @@ export default function Home() {
           {!!selectedLabels.length && (
             <button
               type="button"
-              onClick={() => setSelectedLabels([])}
+              onClick={() => setSelectedLabels(["HTML"])}
               className="text-sm ml-2"
             >
               ❌ Clear
