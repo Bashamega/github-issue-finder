@@ -1,19 +1,35 @@
-import { useState, useEffect, ChangeEvent } from "react";
+import { useState, useEffect, ChangeEvent, useCallback } from "react";
 import { FaGithub } from "react-icons/fa";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
+
+const labelslang = ["HTML", "CSS", "JS", "PHP"];
+const labelsgit = [
+  "bug",
+  "documentation",
+  "duplicate",
+  "enhancement",
+  "good first issue",
+  "help wanted",
+  "invalid",
+  "question",
+];
+
 export default function Home() {
   const [data, setData] = useState<any[]>([]);
-  const [topic, setTopic] = useState("html");
   const [searchTerm, setSearchTerm] = useState("");
   const [searchButtonClicked, setSearchButtonClicked] = useState(false);
 
-  const fetchData = () => {
+  // Added state to store all selected labels.
+  const [selectedLabels, setSelectedLabels] = useState<string[]>(["HTML"]);
+
+  const fetchData = useCallback(() => {
     let apiUrl = "";
 
     if (searchTerm !== "") {
       apiUrl = "api/issues/search/?term=" + searchTerm;
     } else {
-      apiUrl = "api/issues/topics/?label=" + topic;
+      apiUrl = "api/issues/topics/?label=" + selectedLabels.join(",");
     }
 
     try {
@@ -30,18 +46,22 @@ export default function Home() {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  };
+  }, [searchTerm, selectedLabels]);
 
   useEffect(() => {
     if (searchButtonClicked) {
       fetchData();
     }
-  }, [topic, searchTerm, searchButtonClicked]);
+  }, [selectedLabels, searchTerm, searchButtonClicked, fetchData]);
 
   function changeTopic(t: string) {
     setSearchTerm("");
-    setTopic(t);
-    fetchData();
+    setSelectedLabels((prev) => {
+      if (prev.includes(t)) {
+        return prev.filter((item) => item !== t);
+      }
+      return [...prev, t];
+    });
   }
 
   function handleSearchChange(e: ChangeEvent<HTMLInputElement>) {
@@ -54,19 +74,7 @@ export default function Home() {
 
   useEffect(() => {
     fetchData();
-  }, []);
-
-  const labelslang = ["HTML", "CSS", "JS", "PHP"];
-  const labelsgit = [
-    "bug",
-    "documentation",
-    "duplicate",
-    "enhancement",
-    "good first issue",
-    "help wanted",
-    "invalid",
-    "question",
-  ];
+  }, [fetchData, selectedLabels]);
 
   function isDarkColor(color: string) {
     // Convert the color to RGB
@@ -96,7 +104,10 @@ export default function Home() {
         <Link href="/contributors" className="ml-4 hover:underline">
           Contributors
         </Link>
-        <Link href="https://github.com/Bashamega/github-issue-finder" className="ml-4 hover:underline">
+        <Link
+          href="https://github.com/Bashamega/github-issue-finder"
+          className="ml-4 hover:underline"
+        >
           Contribute
         </Link>
         <Link href="/about" className="ml-4 hover:underline">
@@ -106,7 +117,10 @@ export default function Home() {
 
       <section className="flex min-h-screen flex-col items-center p-6 md:p-24 ">
         <h1 className="text-2xl">Github Issue Finder</h1>
-        <a href="https://github.com/bashamega/github-issue-finder" className="m-5">
+        <a
+          href="https://github.com/bashamega/github-issue-finder"
+          className="m-5"
+        >
           <FaGithub size={50} />
         </a>
         <input
@@ -121,7 +135,15 @@ export default function Home() {
         >
           Search
         </button>
-        <p className="mt-2">Label: {topic}</p>
+        <p className="mt-2">
+          <>
+            {!selectedLabels.length && "Please select a label"}
+            {!!selectedLabels.length &&
+              `${
+                selectedLabels.length === 1 ? "Label:" : "Labels:"
+              } ${selectedLabels.join(", ")}`}
+          </>
+        </p>
         <div className="flex flex-wrap mt-3">
           {labelsgit.map((item) => {
             const isDark = isDarkColor(item);
@@ -131,7 +153,11 @@ export default function Home() {
               <p
                 key={item}
                 onClick={() => changeTopic(item)}
-                className={`bg-gray-300 ${textColor} px-2 py-1 rounded mr-2 mb-2 cursor-pointer`}
+                className={cn(
+                  `bg-gray-300 px-2 py-1 rounded mr-2 mb-2 cursor-pointer`,
+                  textColor,
+                  selectedLabels.includes(item) && "bg-blue-500 text-white"
+                )}
                 style={{ backgroundColor: `#${item}` }}
               >
                 {item}
@@ -139,7 +165,7 @@ export default function Home() {
             );
           })}
         </div>
-        <div className="flex flex-wrap mt-3">
+        <div className="flex flex-wrap mt-3 items-center">
           {labelslang.map((item) => {
             const isDark = isDarkColor(item);
             const textColor = isDark ? "text-white" : "text-gray-800";
@@ -148,13 +174,26 @@ export default function Home() {
               <p
                 key={item}
                 onClick={() => changeTopic(item)}
-                className={`bg-gray-300 ${textColor} px-2 py-1 rounded mr-2 mb-2 cursor-pointer`}
+                className={cn(
+                  `bg-gray-300 px-2 py-1 rounded mr-2 mb-2 cursor-pointer`,
+                  textColor,
+                  selectedLabels.includes(item) && "bg-blue-500 text-white"
+                )}
                 style={{ backgroundColor: `#${item}` }}
               >
                 {item}
               </p>
             );
           })}
+          {!!selectedLabels.length && (
+            <button
+              type="button"
+              onClick={() => setSelectedLabels([])}
+              className="text-sm ml-2"
+            >
+              ❌ Clear
+            </button>
+          )}
         </div>
         <h1 className="mt-5 text-lg">Issues</h1>
         <div>
